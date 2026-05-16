@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import registerImg from "../assets/sample.jpg";
+import { registerUser } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("User Register: ", {name, email, password})
-  }
+    dispatch(registerUser({ name, email, password }));
+  };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-r from-[#F8EDEB] to-[#E8CFCB]">
-
       {/* Left Image */}
-        <div className="hidden md:block w-1/2 bg-white pt-10 pb-10"> 
-         <div className="h-full flex flex-col justify-center items-center">
+      <div className="hidden md:block w-1/2 bg-white pt-10 pb-10">
+        <div className="h-full flex flex-col justify-center items-center">
           <img
             src={registerImg}
             alt="Register here"
@@ -28,9 +30,10 @@ const Register = () => {
 
       {/* Right Form */}
       <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
-        
-        <form onSubmit={handleSubmit} className="w-full max-w-md bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-[#E8CFCB]">
-          
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-[#E8CFCB]"
+        >
           {/* Brand */}
           <div className="text-center mb-6">
             <h2 className="text-lg font-semibold text-[#B76E79] tracking-wide">
