@@ -93,7 +93,9 @@ const AdminHomePage = () => {
                     className="border-b hover:bg-gray-50 cursor-pointer"
                   >
                     <td className="py-3 px-4">{order._id}</td>
-                    <td className="py-3 px-4">{order.user.name}</td>
+                    <td className="py-3 px-4">
+                      {order.user?.name || "Deleted User"}
+                    </td>
                     <td className="py-3 px-4">
                       ₹{order.totalPrice.toFixed(2)}
                     </td>

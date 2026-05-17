@@ -56,7 +56,7 @@ const OrderManagement = () => {
                     #{order._id}
                   </td>
 
-                  <td className="p-4">{order.user.name}</td>
+                  <td className="p-4">{order.user?.name || "Deleted User"}</td>
 
                   <td className="p-4">${order.totalPrice.toFixed(2)}</td>
 
