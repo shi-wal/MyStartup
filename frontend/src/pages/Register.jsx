@@ -62,7 +62,7 @@ const Register = () => {
           {/* Brand */}
           <div className="text-center mb-6">
             <h2 className="text-lg font-semibold text-[#B76E79] tracking-wide">
-              HANDMADE HAVEN
+              WISHLOOM
             </h2>
           </div>
 

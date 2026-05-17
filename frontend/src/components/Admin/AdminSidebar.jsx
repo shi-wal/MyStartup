@@ -24,11 +24,13 @@ const AdminSidebar = () => {
     <div className="p-6">
       {/* Logo / Title */}
       <div className="mb-6">
-        <Link
-          to="/admin"
-          className="text-xl font-medium uppercase tracking-wide"
-        >
-          Handmade Haven
+        <Link to="/admin" className="inline-flex flex-col leading-tight">
+          <span className="text-2xl font-bold tracking-wide text-[#B76E79] hover:text-[#C49A8A]">
+            WISHLOOM
+          </span>
+          <span className="text-xs text-gray-400 text-center uppercase tracking-widest">
+            By Shiwal
+          </span>
         </Link>
       </div>
 

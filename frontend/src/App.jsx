@@ -18,6 +18,8 @@ import UserManagement from "./components/Admin/UserManagement";
 import ProductManagement from "./components/Admin/ProductManagement";
 import EditProductPage from "./components/Admin/EditProductPage";
 import OrderManagement from "./components/Admin/OrderManagement";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="register" element={<Register />} />
             <Route path="profile" element={<Profile />} />
             <Route path="collection/:collection" element={<CollectionPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="checkout" element={<Checkout />} />
             <Route

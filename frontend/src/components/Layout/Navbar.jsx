@@ -35,7 +35,7 @@ const Navbar = () => {
         <div>
           <Link to="/" className="inline-flex flex-col leading-tight">
             <span className="text-2xl font-bold tracking-wide text-[#B76E79] hover:text-[#C49A8A]">
-              HANDMADE HAVEN
+              WISHLOOM
             </span>
             <span className="text-xs text-gray-400 text-center uppercase tracking-widest">
               By Shiwal
@@ -58,13 +58,13 @@ const Navbar = () => {
             Collection
           </Link>
           <Link
-            to="#"
+            to="/about"
             className="text-gray-600 hover:text-[#B76E79] text-sm font-medium uppercase"
           >
             About
           </Link>
           <Link
-            to="#"
+            to="/contact"
             className="text-gray-600 hover:text-[#B76E79] text-sm font-medium uppercase"
           >
             Contact
