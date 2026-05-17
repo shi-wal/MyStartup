@@ -1,29 +1,42 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { FaBoxOpen, FaClipboardList, FaSignOutAlt, FaStop, FaStore, FaUser } from "react-icons/fa";
+import {
+  FaBoxOpen,
+  FaClipboardList,
+  FaSignOutAlt,
+  FaStop,
+  FaStore,
+  FaUser,
+} from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { clearCart } from "../../redux/slices/cartSlice";
 
 const AdminSidebar = () => {
-    const navigate=useNavigate();
-    const handleLogout=()=>{
-        navigate("/");
-    }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearCart());
+    navigate("/");
+  };
   return (
     <div className="p-6">
-      
       {/* Logo / Title */}
       <div className="mb-6">
-        <Link to="/admin" className="text-xl font-medium uppercase tracking-wide">
+        <Link
+          to="/admin"
+          className="text-xl font-medium uppercase tracking-wide"
+        >
           Handmade Haven
         </Link>
       </div>
 
       {/* Heading */}
-      <h2 className="text-lg font-medium mb-5 text-left ">
-        Admin Dashboard
-      </h2>
+      <h2 className="text-lg font-medium mb-5 text-left ">Admin Dashboard</h2>
 
       {/* Navigation */}
       <nav className="flex flex-col space-y-2">
-
         <NavLink
           to="/admin/users"
           className={({ isActive }) =>
@@ -36,7 +49,7 @@ const AdminSidebar = () => {
           <span>Users</span>
         </NavLink>
 
-         <NavLink
+        <NavLink
           to="/admin/products"
           className={({ isActive }) =>
             isActive
@@ -48,7 +61,7 @@ const AdminSidebar = () => {
           <span>Products</span>
         </NavLink>
 
-         <NavLink
+        <NavLink
           to="/admin/orders"
           className={({ isActive }) =>
             isActive
@@ -74,10 +87,13 @@ const AdminSidebar = () => {
       </nav>
 
       <div className="mt-6">
-        <button onClick={handleLogout} className="w-full hover:bg-red-600 text-white bg-red-500 py-2 px-4 rounded flex 
-        items-center justify-center space-x-2">
-            <FaSignOutAlt />
-            <span>Logout</span>
+        <button
+          onClick={handleLogout}
+          className="w-full hover:bg-red-600 text-white bg-red-500 py-2 px-4 rounded flex 
+        items-center justify-center space-x-2"
+        >
+          <FaSignOutAlt />
+          <span>Logout</span>
         </button>
       </div>
     </div>
