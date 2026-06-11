@@ -66,10 +66,16 @@ const CollectionPage = () => {
       </div>
 
       {/* Main Page */}
-      <div className="flex-grow p-4 mx-5">
-        <h2 className="text-2xl uppercase mb-4 text-gray-700">
-          All Collection
-        </h2>
+      <div className="flex-grow p-8 mx-5">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-serif text-gray-800 mb-4">
+            Our Collection
+          </h1>
+
+          <p className="text-gray-500 uppercase tracking-[0.3em] text-sm">
+            Personalized and Customized
+          </p>
+        </div>
 
         {/* Sort Options */}
         <SortOptions />

@@ -55,6 +55,25 @@ export const updateProduct = createAsyncThunk(
   },
 );
 
+// Async thunk to create product
+export const createProduct = createAsyncThunk(
+  "products/createProduct",
+
+  async (productData) => {
+    const response = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/products`,
+      productData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      },
+    );
+
+    return response.data;
+  },
+);
+
 // Async thunk to fetch similar products
 export const fetchSimilarProducts = createAsyncThunk(
   "products/fetchSimilarProducts",
@@ -175,6 +194,21 @@ const productsSlice = createSlice({
       })
 
       .addCase(fetchSimilarProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      .addCase(createProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products.push(action.payload);
+      })
+
+      .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

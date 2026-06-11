@@ -14,10 +14,11 @@ const FilterSidebar = () => {
   const [priceRange, setPriceRange] = useState([0, 989]);
 
   const categories = [
-    "Embroided Hankies",
-    "Gift Hampers",
-    "Embroided Keychains",
-    "Aesthetic Collages",
+    "Embroidered Hankies",
+    "Crochet",
+    "Hair Accessories",
+    "Scrapbooks",
+    "Flowers",
   ];
 
   const genders = ["Men", "Women"];

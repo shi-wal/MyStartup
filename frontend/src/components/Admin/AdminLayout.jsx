@@ -13,36 +13,35 @@ const AdminLayout = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row relative">
       {/* Mobile Toggle Button */}
-        <div className="flex md:hidden p-4 bg-[#F8EDEB] text-gray-800 z-20">
+      <div className="flex md:hidden p-4 bg-[#F8EDEB] text-gray-800 z-20">
         <button onClick={toggleSidebar}>
-            <FaBars size={24} />
+          <FaBars size={24} />
         </button>
-        <h1 className="ml-4 text-xl font-medium">Admin Dashboard</h1>
-        </div>
+        <h1 className="heading-font ml-4 text-xl">Admin Dashboard</h1>
+      </div>
 
       {/* Overlay for mobile sidebar */}
-        {isSidebarOpen && (
+      {isSidebarOpen && (
         <div
-            className="fixed inset-0 z-10 bg-gray-300 bg-opacity-50 md:hidden"
-            onClick={toggleSidebar}
+          className="fixed inset-0 z-10 bg-gray-300 bg-opacity-50 md:hidden"
+          onClick={toggleSidebar}
         ></div>
-        )}
+      )}
 
-        {/* Sidebar */}
-        <div
+      {/* Sidebar */}
+      <div
         className={`bg-[#F8EDEB] w-64 min-h-screen text-gray-800 absolute md:relative transform ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 md:translate-x-0 md:static md:block z-20`}
-        >
+      >
         {/* Sidebar */}
         <AdminSidebar />
-        </div>
+      </div>
 
-        {/* Main content */}
-        <div className="flex-grow p-6 overflow-auto">
-            <Outlet />
-        </div>
-
+      {/* Main content */}
+      <div className="flex-grow p-6 overflow-auto">
+        <Outlet />
+      </div>
     </div>
   );
 };

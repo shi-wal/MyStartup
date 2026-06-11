@@ -33,10 +33,10 @@ const Home = () => {
     <div>
       <Hero />
       <NewArrivals />
-      <section className="py-12 px-4 lg:px-0">
+      <section id="bestseller" className="py-12 px-4 lg:px-0">
         {/* Title */}
         <div className="container mx-auto text-center mb-8 mt-2">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 uppercase">
+          <h2 className="font-serif text-2xl md:text-3xl font-semibold text-gray-800 uppercase">
             Our Bestseller
           </h2>
           {bestSellerProduct ? (
@@ -45,10 +45,12 @@ const Home = () => {
             <p className="text-center">Loading best seller product...</p>
           )}
         </div>
+        {/*
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 uppercase text-center mb-6">
           You may also like
         </h2>
         <ProductGrid products={products} loading={loading} error={error} />
+        */}
       </section>
       <FeaturesSection />
     </div>

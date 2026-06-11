@@ -34,10 +34,10 @@ const Navbar = () => {
         {/* logo */}
         <div>
           <Link to="/" className="inline-flex flex-col leading-tight">
-            <span className="text-2xl font-bold tracking-wide text-[#B76E79] hover:text-[#C49A8A]">
+            <span className="logo-font text-3xl font-bold tracking-wide text-[#B76E79] hover:text-[#C49A8A]">
               WISHLOOM
             </span>
-            <span className="text-xs text-gray-400 text-center uppercase tracking-widest">
+            <span className="tagline-font text-xs text-gray-400 text-center uppercase tracking-[0.3em]">
               By Shiwal
             </span>
           </Link>
@@ -47,25 +47,25 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-6">
           <Link
             to="/"
-            className="text-gray-600 hover:text-[#B76E79] text-sm font-medium uppercase"
+            className="text-gray-600 hover:text-[#B76E79] transition transform hover:scale-110 text-sm font-medium uppercase"
           >
             Home
           </Link>
           <Link
             to="/collection/all"
-            className="text-gray-600 hover:text-[#B76E79] text-sm font-medium uppercase"
+            className="text-gray-600 hover:text-[#B76E79] transition transform hover:scale-110 text-sm font-medium uppercase"
           >
             Collection
           </Link>
           <Link
             to="/about"
-            className="text-gray-600 hover:text-[#B76E79] text-sm font-medium uppercase"
+            className="text-gray-600 hover:text-[#B76E79] transition transform hover:scale-110 text-sm font-medium uppercase"
           >
             About
           </Link>
           <Link
             to="/contact"
-            className="text-gray-600 hover:text-[#B76E79] text-sm font-medium uppercase"
+            className="text-gray-600 hover:text-[#B76E79] transition transform hover:scale-110 text-sm font-medium uppercase"
           >
             Contact
           </Link>
@@ -127,7 +127,7 @@ const Navbar = () => {
             <Link
               to="/"
               onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black text-base font-medium uppercase"
+              className="block text-gray-600 hover:text-[#B76E79] text-base font-medium uppercase"
             >
               Home
             </Link>
@@ -135,7 +135,7 @@ const Navbar = () => {
             <Link
               to="/collection/all"
               onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black text-base font-medium uppercase"
+              className="block text-gray-600 hover:text-[#B76E79] text-base font-medium uppercase"
             >
               Collection
             </Link>
@@ -143,7 +143,7 @@ const Navbar = () => {
             <Link
               to="/about"
               onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black text-base font-medium uppercase"
+              className="block text-gray-600 hover:text-[#B76E79] text-base font-medium uppercase"
             >
               About
             </Link>
@@ -151,7 +151,7 @@ const Navbar = () => {
             <Link
               to="/contact"
               onClick={toggleNavDrawer}
-              className="block text-gray-600 hover:text-black text-base font-medium uppercase"
+              className="block text-gray-600 hover:text-[#B76E79] text-base font-medium uppercase"
             >
               Contact
             </Link>

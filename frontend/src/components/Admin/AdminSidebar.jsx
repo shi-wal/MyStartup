@@ -25,17 +25,14 @@ const AdminSidebar = () => {
       {/* Logo / Title */}
       <div className="mb-6">
         <Link to="/admin" className="inline-flex flex-col leading-tight">
-          <span className="text-2xl font-bold tracking-wide text-[#B76E79] hover:text-[#C49A8A]">
+          <span className="logo-font text-2xl font-bold tracking-wide text-[#B76E79] hover:text-[#C49A8A]">
             WISHLOOM
           </span>
-          <span className="text-xs text-gray-400 text-center uppercase tracking-widest">
+          <span className="tagline-font text-xs text-gray-400 text-center uppercase tracking-widest">
             By Shiwal
           </span>
         </Link>
       </div>
-
-      {/* Heading */}
-      <h2 className="text-lg font-medium mb-5 text-left ">Admin Dashboard</h2>
 
       {/* Navigation */}
       <nav className="flex flex-col space-y-2">

@@ -1,7 +1,7 @@
 const express = require("express");
 const Product = require("../models/Product");
-const {protect, admin} =require("../middleware/authMiddleware");
-const router= express.Router();
+const { protect, admin } = require("../middleware/authMiddleware");
+const router = express.Router();
 
 // @route POST /api/products
 // @desc Create a new Product
@@ -29,7 +29,7 @@ router.post("/", protect, admin, async (req, res) => {
       sku,
     } = req.body;
 
-    const product= new Product({
+    const product = new Product({
       name,
       description,
       price,
@@ -52,20 +52,20 @@ router.post("/", protect, admin, async (req, res) => {
     });
 
     console.log("USER:", req.user);
-   const createdProduct = await product.save();
+    const createdProduct = await product.save();
     res.status(201).json(createdProduct);
-} catch (error) {
-  console.error(error);
-  res.status(500).send("Server Error");
-}
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 });
 
 // @route PUT /api/products/:id
 // @desc Update an existing Product ID
 // @access Private/Admin
 router.put("/:id", protect, admin, async (req, res) => {
-    try {
-        const {
+  try {
+    const {
       name,
       description,
       price,
@@ -90,39 +90,44 @@ router.put("/:id", protect, admin, async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (product) {
-    // Update product fields
-    product.name = name || product.name;
-    product.description = description || product.description;
-    product.price = price || product.price;
-    product.discountPrice = discountPrice || product.discountPrice;
-    product.countInStock = countInStock || product.countInStock;
-    product.category = category || product.category;
-    product.sizes = sizes || product.sizes;
-    product.colors = colors || product.colors;
-    product.collections = collections || product.collections;
-    product.material = material || product.material;
-    product.gender = gender || product.gender;
-    product.images = images || product.images;
-    product.isFeatured = isFeatured!== undefined? isFeatured: product.isFeatured;
-    product.isPublished = isPublished!== undefined? isPublished: product.isPublished;
-    product.tags = tags || product.tags;
-    product.dimensions = dimensions || product.dimensions;
-    product.weight = weight || product.weight;
-    product.sku = sku || product.sku;
+      // Update product fields
+      product.name = name || product.name;
+      product.description = description || product.description;
+      product.price = price || product.price;
+      product.discountPrice = discountPrice || product.discountPrice;
+      product.countInStock = countInStock || product.countInStock;
+      product.category = category || product.category;
+      product.sizes = sizes || product.sizes;
+      product.colors = colors || product.colors;
+      product.collections = collections || product.collections;
+      product.material = material || product.material;
+      product.gender = gender || product.gender;
+      product.images = images || product.images;
+      product.isFeatured =
+        isFeatured !== undefined ? isFeatured : product.isFeatured;
+      product.isPublished =
+        isPublished !== undefined ? isPublished : product.isPublished;
+      product.tags = tags || product.tags;
+      product.dimensions = dimensions || product.dimensions;
+      product.weight = weight || product.weight;
+      product.sku = sku || product.sku;
 
-    // Save the updated product
-    const updatedProduct = await product.save();
-    res.json(updatedProduct);
-    
-} else {
-  res.status(404).json({ message: "Product not found" });
-}
-} catch (error) {
-  console.error(error);
-  res.status(500).send("Server Error");
-}
+      // Save the updated product
+      try {
+        const updatedProduct = await product.save();
+        res.json(updatedProduct);
+      } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(404).json({ message: "Product not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 });
-
 
 // @route DELETE /api/products/:id
 // @desc Delete a product by ID
@@ -173,52 +178,51 @@ router.get("/", async (req, res) => {
     }
 
     if (gender) {
-      query.gender = gender;
+      query.gender = { $in: [gender] };
     }
 
-    if(minPrice || maxPrice){
-        query.price ={};
-        if(minPrice) query.price.$gte=Number(minPrice);
-        if(maxPrice) query.price.$lte=Number(maxPrice);
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
     }
 
-    if(search){
-        query.$or=[
-            {name: {$regex: search, $options: "i"}},
-            {description: {$regex: search, $options: "i"}},  // i-> case insensitive search         
-        ]
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }, // i-> case insensitive search
+      ];
     }
 
     //sort logic
-    let sort={}
-    if(sortBy){
-        switch(sortBy){
-            case "priceAsc":
-                sort ={price:1};
-                break;
-            case "priceDesc":
-                sort ={price: -1};
-                break;
-            case "popularity":
-                sort ={rating: -1};
-                break;
-            default:
-                break;
-        }
+    let sort = {};
+    if (sortBy) {
+      switch (sortBy) {
+        case "priceAsc":
+          sort = { price: 1 };
+          break;
+        case "priceDesc":
+          sort = { price: -1 };
+          break;
+        case "popularity":
+          sort = { rating: -1 };
+          break;
+        default:
+          break;
+      }
     }
 
-// Fetch products and apply sorting and limit
-let products = await Product.find(query)
-  .sort(sort)
-  .limit(Number(limit) || 0);
+    // Fetch products and apply sorting and limit
+    let products = await Product.find(query)
+      .sort(sort)
+      .limit(Number(limit) || 0);
 
-res.json(products);
-} catch (error) {
-  console.error(error);
-  res.status(500).send("Server Error");
-}
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 });
-
 
 // @route GET /api/products/new-arrivals
 // @desc Retrieve latest 8 products - Creation date
@@ -233,7 +237,6 @@ router.get("/new-arrivals", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
-
 
 // @route GET /api/products/best-seller
 // @desc Retrieve the product with highest rating
@@ -251,9 +254,7 @@ router.get("/best-seller", async (req, res) => {
     console.error(error);
     res.status(500).send("Server Error");
   }
-
 });
-
 
 // @route GET /api/products/:id
 // @desc Get a single product by ID
@@ -273,7 +274,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
 // @route GET /api/products/similar/:id
 // @desc Retrieve similar products based on the current product's gender and category
 // @access Public
@@ -281,22 +281,22 @@ router.get("/similar/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-  const product = await Product.findById(id);
+    const product = await Product.findById(id);
 
-  if (!product) {
-    return res.status(404).json({ message: "Product not found" });
-  }
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
-  const similarProducts = await Product.find({
-    _id: { $ne: id }, // Exclude the current product ID
-    gender: product.gender,
-    category: product.category,
-  }).limit(4);
-  res.json(similarProducts);
-} catch (error) {
+    const similarProducts = await Product.find({
+      _id: { $ne: id }, // Exclude the current product ID
+      gender: product.gender,
+      category: product.category,
+    }).limit(4);
+    res.json(similarProducts);
+  } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
-}
+  }
 });
 
 module.exports = router;

@@ -1,8 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Playfair+Display:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Nunito+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-#root{
+body {
   font-family: "Ubuntu", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
@@ -12,4 +18,16 @@
   font-family: "Prata", serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.logo-font {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.tagline-font {
+  font-family: "Montserrat", sans-serif;
+}
+
+.heading-font {
+  font-family: "Playfair Display", serif;
 }

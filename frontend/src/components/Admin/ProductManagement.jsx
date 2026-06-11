@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   deleteProduct,
   fetchAdminProducts,
@@ -8,6 +8,7 @@ import {
 
 const ProductManagement = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { products, loading, error } = useSelector(
     (state) => state.adminProducts,
@@ -29,7 +30,14 @@ const ProductManagement = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <h2 className="text-xl font-bold mb-6">Product Management</h2>
+      <h2 className="text-2xl font-bold mb-6">Product Management</h2>
+
+      <button
+        onClick={() => navigate("/admin/products/new")}
+        className="bg-green-500 text-white px-4 py-2 mb-8 rounded"
+      >
+        Add New Product
+      </button>
 
       <div className="overflow-x-auto shadow-md sm:rounded-lg">
         <table className="min-w-full text-left text-gray-500">

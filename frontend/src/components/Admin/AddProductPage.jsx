@@ -1,20 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  fetchProductDetails,
-  updateProduct,
-} from "../../redux/slices/productsSlice";
+import { createProduct } from "../../redux/slices/productsSlice";
 import axios from "axios";
 
-const EditProductPage = () => {
+const AddProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
 
-  const { selectedProduct, loading, error } = useSelector(
-    (state) => state.products,
-  );
+  const { loading, error } = useSelector((state) => state.products);
 
   const [productData, setProductData] = useState({
     name: "",
@@ -23,29 +17,16 @@ const EditProductPage = () => {
     countInStock: 0,
     sku: "",
     category: [],
+    brand: "",
     sizes: [],
     colors: [],
     collections: "",
+    material: "",
     gender: [],
     images: [],
-
-    isFeatured: false,
-    isPublished: false,
   });
 
   const [uploading, setUploading] = useState(false); // Image uploading state
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchProductDetails(id));
-    }
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (selectedProduct) {
-      setProductData(selectedProduct);
-    }
-  }, [selectedProduct]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -89,9 +70,11 @@ const EditProductPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateProduct({ id, productData }));
+
+    await dispatch(createProduct(productData));
+
     navigate("/admin/products");
   };
 
@@ -101,7 +84,7 @@ const EditProductPage = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 shadow-md rounded-md">
-      <h2 className="text-3xl font-bold mb-6">Edit Product</h2>
+      <h2 className="text-3xl font-bold mb-6">Add Product</h2>
 
       <form onSubmit={handleSubmit}>
         {/* Name */}
@@ -168,7 +151,7 @@ const EditProductPage = () => {
           />
         </div>
 
-        {/* Category */}
+        {/* category */}
         <div className="mb-6">
           <label className="block font-semibold mb-2">
             Category (comma-separated)
@@ -176,23 +159,22 @@ const EditProductPage = () => {
 
           <input
             type="text"
-            name="category"
-            value={
-              Array.isArray(productData.category)
-                ? productData.category.join(", ")
-                : productData.category || ""
-            }
+            value={productData.category.join(", ")}
             onChange={(e) =>
               setProductData({
                 ...productData,
-                category: e.target.value.split(",").map((cat) => cat.trim()),
+                category: e.target.value
+                  .split(",")
+                  .map((cat) => cat.trim())
+                  .filter(Boolean),
               })
             }
             className="w-full p-2 border border-gray-300 rounded-md"
+            placeholder="Embroidery, Gifts, Scrapbooks"
           />
         </div>
 
-        {/* Collection */}
+        {/* collection */}
         <div className="mb-6">
           <label className="block font-semibold mb-2">Collection</label>
 
@@ -202,11 +184,10 @@ const EditProductPage = () => {
             value={productData.collections}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded-md"
-            required
           />
         </div>
 
-        {/* Gender */}
+        {/* gender */}
         <div className="mb-6">
           <label className="block font-semibold mb-2">Gender</label>
 
@@ -253,38 +234,6 @@ const EditProductPage = () => {
               Women
             </label>
           </div>
-        </div>
-
-        {/* Featured Product */}
-        <div className="mb-6 flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={productData.isFeatured}
-            onChange={(e) =>
-              setProductData({
-                ...productData,
-                isFeatured: e.target.checked,
-              })
-            }
-          />
-
-          <label>Featured Product</label>
-        </div>
-
-        {/* Published */}
-        <div className="mb-6 flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={productData.isPublished}
-            onChange={(e) =>
-              setProductData({
-                ...productData,
-                isPublished: e.target.checked,
-              })
-            }
-          />
-
-          <label>Published</label>
         </div>
 
         {/* Sizes */}
@@ -356,11 +305,11 @@ const EditProductPage = () => {
           className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-gray-600
             transition-colors"
         >
-          Update Product
+          Add Product
         </button>
       </form>
     </div>
   );
 };
 
-export default EditProductPage;
+export default AddProductPage;

@@ -61,7 +61,7 @@ const Register = () => {
         >
           {/* Brand */}
           <div className="text-center mb-6">
-            <h2 className="text-lg font-semibold text-[#B76E79] tracking-wide">
+            <h2 className="logo-font text-lg font-bold text-[#B76E79] tracking-wide">
               WISHLOOM
             </h2>
           </div>

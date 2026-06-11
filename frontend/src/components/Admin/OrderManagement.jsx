@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import {
   fetchAllOrders,
   updateOrderStatus,
+  deleteOrder,
 } from "../../redux/slices/adminOrderSlice";
 import { useEffect } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const OrderManagement = () => {
   const navigate = useNavigate();
@@ -24,6 +26,16 @@ const OrderManagement = () => {
 
   const handleStatusChange = (orderId, status) => {
     dispatch(updateOrderStatus({ id: orderId, status }));
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this order?",
+    );
+
+    if (confirmDelete) {
+      dispatch(deleteOrder(orderId));
+    }
   };
 
   if (loading) return <p>Loading...</p>;
@@ -58,7 +70,7 @@ const OrderManagement = () => {
 
                   <td className="p-4">{order.user?.name || "Deleted User"}</td>
 
-                  <td className="p-4">${order.totalPrice.toFixed(2)}</td>
+                  <td className="p-4">₹{order.totalPrice.toFixed(2)}</td>
 
                   <td className="p-4">
                     <select
@@ -75,12 +87,13 @@ const OrderManagement = () => {
                     </select>
                   </td>
 
-                  <td className="p-4">
+                  <td className="p-4 flex items-center gap-3">
                     <button
-                      onClick={() => handleStatusChange(order._id, "Delivered")}
-                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                      onClick={() => handleDeleteOrder(order._id)}
+                      className="text-red-500 hover:text-red-700 transition-colors"
+                      title="Delete Order"
                     >
-                      Mark as Delivered
+                      <RiDeleteBin6Line size={20} />
                     </button>
                   </td>
                 </tr>

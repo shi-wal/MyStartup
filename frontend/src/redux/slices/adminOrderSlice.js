@@ -125,6 +125,13 @@ const adminOrderSlice = createSlice({
         state.orders = state.orders.filter(
           (order) => order._id !== action.payload,
         );
+
+        state.totalOrders = state.orders.length;
+
+        state.totalSales = state.orders.reduce(
+          (acc, order) => acc + order.totalPrice,
+          0,
+        );
       });
   },
 });
