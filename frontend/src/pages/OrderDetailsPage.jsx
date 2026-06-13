@@ -39,19 +39,27 @@ const OrderDetailsPage = () => {
                 className={`${
                   orderDetails.isPaid
                     ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
+                    : "bg-orange-100 text-red-700"
                 } px-3 py-1 rounded-full text-sm font-medium mb-2`}
               >
-                {orderDetails.isPaid ? "Approved" : "Pending"}
+                {orderDetails.paymentMethod === "COD"
+                  ? "Cash On Delivery"
+                  : orderDetails.isPaid
+                    ? "Approved"
+                    : "Pending"}
               </span>
               <span
-                className={`${
-                  orderDetails.isDelivered
+                className={`px-3 py-1 rounded-full text-sm font-medium mb-2 ${
+                  orderDetails.status === "Delivered"
                     ? "bg-green-100 text-green-700"
-                    : "bg-yellow-100 text-yellow-700"
-                } px-3 py-1 rounded-full text-sm font-medium mb-2`}
+                    : orderDetails.status === "Shipped"
+                      ? "bg-purple-100 text-purple-700"
+                      : orderDetails.status === "Cancelled"
+                        ? "bg-red-100 text-red-700"
+                        : "bg-yellow-100 text-yellow-700"
+                }`}
               >
-                {orderDetails.isDelivered ? "Delivered" : "Pending"}
+                {orderDetails.status}
               </span>
             </div>
           </div>
@@ -61,7 +69,14 @@ const OrderDetailsPage = () => {
             <div>
               <h4 className="text-lg font-semibold mb-2">Payment Info</h4>
               <p>Payment Method: {orderDetails.paymentMethod}</p>
-              <p>Status: {orderDetails.isPaid ? "Paid" : "Unpaid"}</p>
+              <p>
+                Status:
+                {orderDetails.paymentMethod === "COD"
+                  ? " Pay On Delivery"
+                  : orderDetails.isPaid
+                    ? " Paid"
+                    : " Unpaid"}
+              </p>
             </div>
 
             <div>

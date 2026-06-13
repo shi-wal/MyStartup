@@ -115,4 +115,52 @@ router.post("/:id/finalize", protect, async (req, res) => {
   }
 });
 
+// @route POST /api/checkout/:id/cod
+router.post("/:id/cod", protect, async (req, res) => {
+  try {
+    const checkout = await Checkout.findById(req.params.id);
+
+    if (!checkout) {
+      return res.status(404).json({
+        message: "Checkout not found",
+      });
+    }
+
+    if (checkout.isFinalized) {
+      return res.status(400).json({
+        message: "Checkout already finalized",
+      });
+    }
+
+    const finalOrder = await Order.create({
+      user: checkout.user,
+      orderItems: checkout.checkoutItems,
+      shippingAddress: checkout.shippingAddress,
+      paymentMethod: "COD",
+      totalPrice: checkout.totalPrice,
+
+      isPaid: false,
+      isDelivered: false,
+
+      paymentStatus: "Pending",
+    });
+
+    checkout.isFinalized = true;
+    checkout.finalizedAt = Date.now();
+
+    await checkout.save();
+
+    await Cart.findOneAndDelete({
+      user: checkout.user,
+    });
+
+    res.status(201).json(finalOrder);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Server Error",
+    });
+  }
+});
+
 module.exports = router;

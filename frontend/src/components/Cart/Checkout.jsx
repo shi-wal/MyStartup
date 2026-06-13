@@ -13,6 +13,7 @@ const Checkout = () => {
   const { cart, loading, error } = useSelector((state) => state.cart);
 
   const [checkoutId, setCheckoutId] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "",
     lastName: "",
@@ -38,7 +39,7 @@ const Checkout = () => {
         createCheckout({
           checkoutItems: cart.products,
           shippingAddress,
-          paymentMethod: "Paypal",
+          paymentMethod,
           totalPrice: cart.totalPrice,
         }),
       );
@@ -78,6 +79,24 @@ const Checkout = () => {
           },
         },
       );
+      navigate("/order-confirmation");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCODOrder = async (checkoutId) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/cod`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        },
+      );
+
       navigate("/order-confirmation");
     } catch (error) {
       console.error(error);
@@ -228,6 +247,32 @@ const Checkout = () => {
             />
           </div>
 
+          <div className="mb-6">
+            <h3 className="text-lg mb-3 font-semibold">Payment Method</h3>
+
+            <div className="space-y-2">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="PayPal"
+                  checked={paymentMethod === "PayPal"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                PayPal
+              </label>
+
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value="COD"
+                  checked={paymentMethod === "COD"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Cash On Delivery
+              </label>
+            </div>
+          </div>
+
           <div className="mt-6">
             {!checkoutId ? (
               <button
@@ -238,14 +283,27 @@ const Checkout = () => {
               </button>
             ) : (
               <div>
-                <h3 className="text-lg mb-4 font-semibold">Pay with PayPal</h3>
+                {paymentMethod === "PayPal" ? (
+                  <>
+                    <h3 className="text-lg mb-4 font-semibold">
+                      Pay with PayPal
+                    </h3>
 
-                {/* PayPal Component */}
-                <PayPalButton
-                  amount={cart.totalPrice}
-                  onSuccess={handlePaymentSuccess}
-                  onError={(err) => alert("Payment failed, try again!")}
-                />
+                    <PayPalButton
+                      amount={cart.totalPrice}
+                      onSuccess={handlePaymentSuccess}
+                      onError={() => alert("Payment failed, try again!")}
+                    />
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => handleCODOrder(checkoutId)}
+                    className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold"
+                  >
+                    Place COD Order
+                  </button>
+                )}
               </div>
             )}
           </div>
